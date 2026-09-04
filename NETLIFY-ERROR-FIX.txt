@@ -1,13 +1,12 @@
 If the deploy log contains:
 
-"build.command" failed
-npm run build
+"Deploy directory 'public' does not exist"
 
-then remove the Build command from the Netlify UI.
+then remove any outdated Build settings overrides from the Netlify UI.
 
 Correct settings:
-Build command: [blank]
-Publish directory: public
+Build command: npm run build
+Publish directory: dist
 Functions directory: netlify/functions
 Base directory: [blank]
 

@@ -1,8 +1,8 @@
 SHADOW LOGIC - NETLIFY FIXED VERSION
 ====================================
 
-THIS VERSION DOES NOT NEED A BUILD COMMAND.
-Netlify publishes the "public" folder directly.
+THIS VERSION USES A SMALL BUILD COMMAND.
+Netlify publishes the generated "dist" folder.
 
 IMPORTANT:
 Do NOT rename .env.example to .env for the live Netlify site.
@@ -17,9 +17,9 @@ Make sure these are in the ROOT of the repository:
 
 package.json
 netlify.toml
-public/
-netlify/
-runner/
+build.mjs
+netlify.toml
+the website and function JavaScript files
 
 Do not put the whole Shadow-Logic-Netlify-Fixed folder inside another folder
 unless Netlify's Base directory is set to that inner folder.
@@ -36,10 +36,10 @@ Base directory:
 LEAVE BLANK
 
 Build command:
-LEAVE BLANK
+npm run build
 
 Publish directory:
-public
+dist
 
 Functions directory:
 netlify/functions
@@ -48,8 +48,8 @@ The included netlify.toml already provides these settings, so normally you
 should not need to enter them manually.
 
 IMPORTANT:
-If Netlify still shows "npm run build" as a Build command in the UI,
-remove it. The fixed project does not require a build.
+If Netlify has different build settings saved in the UI, clear those overrides
+or set them to the values above so netlify.toml remains authoritative.
 
 STEP 3 - Environment variables
 ------------------------------
@@ -118,16 +118,16 @@ Command failed with exit code 1: npm run build
 It also shows SHADOW_JWT_SECRET and SHADOW_SETUP_KEY in the resolved config,
 so Netlify is seeing the variable NAMES.
 
-This fixed version removes the unnecessary build stage entirely and publishes
-/public directly.
+This fixed version generates /dist from the website files and prepares the
+Netlify Functions directory during the build.
 
-IF IT STILL SAYS "npm run build"
---------------------------------
-That means Netlify has a Build command saved in its dashboard overriding or
-continuing from an older configuration.
+IF IT STILL SAYS "PUBLIC DOES NOT EXIST"
+-----------------------------------------
+That means Netlify has a Publish directory saved in its dashboard that is
+overriding the repository configuration.
 
 Go to:
 Project configuration -> Build & deploy -> Build settings
 
-Delete "npm run build" from Build command, save, then:
+Set Build command to "npm run build" and Publish directory to "dist", save, then:
 Deploys -> Trigger deploy -> Clear cache and deploy site.
