@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shadow Logic</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+<div id="login" class="center">
+  <form class="auth-card" id="loginForm">
+    <div class="brand"><div class="logo"></div>Shadow Logic</div>
+    <h1>Welcome back</h1>
+    <div class="muted">Sign in to your owner dashboard.</div>
+    <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" required></div>
+    <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+    <button class="primary wide">Sign in</button>
+    <div id="loginError" class="error"></div>
+    <div class="notice">First deployment? Open <b>/setup.html</b> to create the owner account.</div>
+  </form>
+</div>
+<div id="app" class="layout hidden">
+  <aside class="sidebar">
+    <div class="logo"></div><button class="navbtn active">▱</button><button class="navbtn">⌁</button><button class="navbtn">◫</button><div class="spacer"></div><button class="navbtn" id="logoutBtn">↪</button>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div><h1>Projects</h1><div class="muted">Create, edit and control your Shadow Logic projects.</div></div><div class="row"><div id="user" class="user"></div><button id="newProject" class="primary">+ New Project</button></div></div>
+    <div id="projects" class="grid"></div>
+  </main>
+</div>
+<div id="projectModal" class="modal hidden"><form id="projectForm" class="modal-card">
+<div class="row"><h2 style="margin:0">Create project</h2><button type="button" id="closeModal" class="ghost right">✕</button></div>
+<div class="field"><label>Name</label><input id="projectName" maxlength="60" required></div>
+<div class="field"><label>Type</label><select id="projectType"><option value="node">Node.js / Discord bot</option><option value="web">Website</option><option value="other">Other</option></select></div>
+<button class="primary wide">Create</button><div id="projectError" class="error"></div>
+</form></div>
+<script src="/app.js"></script>
+</body></html>

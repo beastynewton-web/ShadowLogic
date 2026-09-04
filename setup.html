@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shadow Logic — Setup</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="center"><form id="setupForm" class="auth-card">
+<div class="brand"><div class="logo"></div>Shadow Logic</div>
+<h1>Create owner account</h1>
+<div class="muted">Complete this once. The setup key must match the value stored in Netlify Environment Variables.</div>
+<div id="health" class="notice">Checking Netlify configuration…</div>
+<div class="field"><label>Setup key</label><input id="setupKey" type="password" required></div>
+<div class="field"><label>Owner email</label><input id="email" type="email" required></div>
+<div class="field"><label>Password</label><input id="password" type="password" minlength="10" required></div>
+<button class="primary wide">Create owner</button><div class="error" id="error"></div>
+<div class="notice">If this fails, open <b>/api/health</b>. Both required settings should say <b>true</b>.</div>
+</form></div>
+<script>
+const health = document.getElementById("health");
+const errorBox = document.getElementById("error");
+
+async function checkHealth(){
+  try{
+    const r=await fetch("/api/health");
+    const d=await r.json();
+    health.textContent=`JWT secret: ${d.jwtConfigured?"OK":"MISSING / TOO SHORT"} | Setup key: ${d.setupKeyConfigured?"OK":"MISSING"}`;
+  }catch(e){health.textContent="Could not reach /api/health. Check your Netlify deployment."}
+}
+checkHealth();
+
+setupForm.onsubmit=async(e)=>{
+  e.preventDefault();
+  errorBox.textContent="Creating owner…";
+  try{
+    const r=await fetch("/api/setup",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({setupKey:setupKey.value,email:email.value,password:password.value})});
+    const text=await r.text();
+    let d={}; try{d=JSON.parse(text)}catch{d={error:text||"Unknown server response"}}
+    if(!r.ok){errorBox.textContent=(d.error||"Setup failed")+(d.detail?`\n${d.detail}`:"");return;}
+    location.href="/";
+  }catch(err){errorBox.textContent="Could not contact the setup function.\n"+err.message}
+}
+</script></body></html>

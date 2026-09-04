@@ -1,0 +1,14 @@
+If the deploy log contains:
+
+"build.command" failed
+npm run build
+
+then remove the Build command from the Netlify UI.
+
+Correct settings:
+Build command: [blank]
+Publish directory: public
+Functions directory: netlify/functions
+Base directory: [blank]
+
+Then choose "Clear cache and deploy site".

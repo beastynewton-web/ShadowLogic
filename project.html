@@ -1,0 +1,13 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project — Shadow Logic</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="layout">
+<aside class="sidebar"><div class="logo"></div><button class="navbtn" onclick="location.href='/'">←</button><div class="spacer"></div></aside>
+<main class="main">
+<div class="topbar"><div><h1 id="projectTitle">Project</h1><div class="muted" id="projectMeta"></div></div><div class="row"><button class="success" id="runBtn">▶ Run</button><button class="ghost" id="restartBtn">↻ Restart</button><button class="danger" id="stopBtn">■ Stop</button><button class="danger" id="deleteProject">Delete</button></div></div>
+<div class="workspace">
+<section class="pane"><div class="pane-title">Files<button id="newFile" class="ghost right">+</button></div><div id="files" class="files"></div></section>
+<section class="pane"><div class="pane-title"><span id="currentFile">Select a file</span><button id="saveBtn" class="primary right">Save</button></div><textarea id="editor" class="editor" spellcheck="false" disabled></textarea></section>
+<section class="pane console-pane"><div class="pane-title">Console<span id="status" class="pill right">stopped</span></div><div id="console" class="console">Shadow Logic console ready.</div><div class="toolbar"><button id="refreshLogs" class="ghost">Refresh logs</button><button id="previewBtn" class="ghost">Preview web</button></div></section>
+</div></main></div>
+<div id="previewModal" class="modal hidden"><div class="modal-card" style="width:min(1100px,96vw);height:80vh;padding:10px;display:flex;flex-direction:column"><div class="row" style="padding:4px"><b>Web Preview</b><button class="ghost right" onclick="previewModal.classList.add('hidden')">✕</button></div><iframe id="preview" class="preview" sandbox="allow-scripts"></iframe></div></div>
+<script src="/project.js"></script></body></html>

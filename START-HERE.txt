@@ -1,0 +1,133 @@
+SHADOW LOGIC - NETLIFY FIXED VERSION
+====================================
+
+THIS VERSION DOES NOT NEED A BUILD COMMAND.
+Netlify publishes the "public" folder directly.
+
+IMPORTANT:
+Do NOT rename .env.example to .env for the live Netlify site.
+The LIVE environment variables must be entered in Netlify.
+
+STEP 1 - Replace the old project files
+--------------------------------------
+Upload/commit ALL files from this fixed folder to the repository that your
+Netlify site is connected to.
+
+Make sure these are in the ROOT of the repository:
+
+package.json
+netlify.toml
+public/
+netlify/
+runner/
+
+Do not put the whole Shadow-Logic-Netlify-Fixed folder inside another folder
+unless Netlify's Base directory is set to that inner folder.
+
+STEP 2 - Check Netlify Build settings
+-------------------------------------
+Open your Netlify project:
+
+Project configuration -> Build & deploy -> Build settings
+
+Use:
+
+Base directory:
+LEAVE BLANK
+
+Build command:
+LEAVE BLANK
+
+Publish directory:
+public
+
+Functions directory:
+netlify/functions
+
+The included netlify.toml already provides these settings, so normally you
+should not need to enter them manually.
+
+IMPORTANT:
+If Netlify still shows "npm run build" as a Build command in the UI,
+remove it. The fixed project does not require a build.
+
+STEP 3 - Environment variables
+------------------------------
+Netlify -> Project configuration -> Environment variables
+
+Add:
+
+SHADOW_SETUP_KEY
+Value: your private setup key
+
+SHADOW_JWT_SECRET
+Value: a private random value AT LEAST 32 characters long
+
+Do not put the variable name in the value field.
+
+Example:
+Name: SHADOW_SETUP_KEY
+Value: ShadowLogic-Setup-9284-KEEP-PRIVATE
+
+Name: SHADOW_JWT_SECRET
+Value: eD7x9vQ2Kp8Lw3Rn6Jt1Bz5Mh4Ys0AaC
+
+STEP 4 - Redeploy
+-----------------
+Go to:
+
+Deploys -> Trigger deploy -> Clear cache and deploy site
+
+Use "Clear cache and deploy site" so Netlify does not reuse the failed build.
+
+STEP 5 - Health check
+---------------------
+After it says Published, open:
+
+https://shad0wlogic.netlify.app/api/health
+
+You want:
+
+"jwtConfigured": true
+"setupKeyConfigured": true
+
+STEP 6 - Owner setup
+--------------------
+Open:
+
+https://shad0wlogic.netlify.app/setup.html
+
+Enter the EXACT SHADOW_SETUP_KEY value, your email and a password of at least
+10 characters.
+
+STEP 7 - Login
+--------------
+Open:
+
+https://shad0wlogic.netlify.app/
+
+Sign in with the owner account you just created.
+
+WHY YOUR SCREENSHOT FAILED
+--------------------------
+Your screenshot shows Netlify failing specifically at:
+
+"build.command" failed
+Command failed with exit code 1: npm run build
+
+It also shows SHADOW_JWT_SECRET and SHADOW_SETUP_KEY in the resolved config,
+so Netlify is seeing the variable NAMES.
+
+This fixed version removes the unnecessary build stage entirely and publishes
+/public directly.
+
+IF IT STILL SAYS "npm run build"
+--------------------------------
+That means Netlify has a Build command saved in its dashboard overriding or
+continuing from an older configuration.
+
+Go to:
+Project configuration -> Build & deploy -> Build settings
+
+Delete "npm run build" from Build command, save, then:
+Deploys -> Trigger deploy -> Clear cache and deploy site.
